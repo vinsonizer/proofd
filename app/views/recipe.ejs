@@ -1,0 +1,13 @@
+
+<html>
+<head>
+  <title><%= siteTitle %></title>
+</head>
+<body>
+  <form action="/recipes" method="POST">
+    <input type="text" placeholder="name" name="name">
+    <input type="text" placeholder="description" name="description">
+    <button type="submit">Submit</button>
+  </form>
+  <% include partials/template/jsdefaults.ejs %>
+</body>
