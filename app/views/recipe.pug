@@ -1,0 +1,20 @@
+html
+  head
+    include partials/template/header.pug
+    title= siteTitle
+  body
+    nav(class="navbar navbar-inverse navbar-fixed-top")
+      div(class="container")
+        div(class="navbar-header")
+          button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+            span(class="sr-only")= "Toggle navigation"
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+          a(class="navbar-brand", href="#")= siteTitle
+        div(id="navbar", class="collapse navbar-collapse")
+    div(class="container")
+      form(action="/recipes", method="POST")
+        input(type="text", placeholder="name", name="name")
+        input(type="text", placeholder="description", name="description")
+        button(type="submit")= "Submit"
