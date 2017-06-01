@@ -3,16 +3,7 @@ html
     include partials/template/header.pug
     title= siteTitle
   body
-    nav(class="navbar navbar-inverse navbar-fixed-top")
-      div(class="container")
-        div(class="navbar-header")
-          button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
-            span(class="sr-only")= "Toggle navigation"
-            span(class="icon-bar")
-            span(class="icon-bar")
-            span(class="icon-bar")
-          a(class="navbar-brand", href="#")= siteTitle
-        div(id="navbar", class="collapse navbar-collapse")
+    include partials/template/navbar.pug
     div(class="container")
       div(class="page-header")
         h1= "Recipes"
@@ -22,9 +13,12 @@ html
             tr
               th= "Name"
               th= "Description"
+              th
           tbody
             each val in recipes
               tr
-                td= val.name
+                td
+                  a(href="/recipes/" + val._id)= val.name
                 td= val.description
-      a(href='recipes')= "New"
+                td
+                  a(href="#", onclick='javascript:deleteRecipe("' + val._id + '")')= "Delete"

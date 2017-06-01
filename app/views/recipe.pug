@@ -3,18 +3,24 @@ html
     include partials/template/header.pug
     title= siteTitle
   body
-    nav(class="navbar navbar-inverse navbar-fixed-top")
-      div(class="container")
-        div(class="navbar-header")
-          button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
-            span(class="sr-only")= "Toggle navigation"
-            span(class="icon-bar")
-            span(class="icon-bar")
-            span(class="icon-bar")
-          a(class="navbar-brand", href="#")= siteTitle
-        div(id="navbar", class="collapse navbar-collapse")
+    include partials/template/navbar.pug
     div(class="container")
-      form(action="/recipes", method="POST")
-        input(type="text", placeholder="name", name="name")
-        input(type="text", placeholder="description", name="description")
+      form(action="/recipes?_method=" + formMethod, method="POST")
+        if recipe._id
+          input(type="hidden", name="_id", value=recipe._id)
+        div(class="form-group")
+          label(for="name")= "Recipe Name: "
+          input(class="form-control", type="text", placeholder="Recipe Name", name="name", value=recipe.name)
+        div(class="form-group")
+          label(for="style")= "Recipe Style: "
+          select(class="form-control", name="style", value=recipe.style)
+            option(value="")= "Please Select"
+            for val in ref.styles
+              option(value=val, selected=recipe.style==val)= val
+        div(class="form-group")
+          label(for="description")= "Description: "
+          textarea(class="form-control", placeholder="Description", name="description")= recipe.description
+        div(class="form-group")
+          label(for="process")= "Process: "
+          textarea(id="recipe-process", class="form-control", placeholder="Process", cols=100, name="process")= recipe.process
         button(type="submit")= "Submit"
