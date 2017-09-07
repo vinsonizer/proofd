@@ -7,18 +7,4 @@ html
     div(class="container")
       div(class="page-header")
         h1= "Recipes"
-      div(class="col-md-6")
-        table(class="table")
-          thead
-            tr
-              th= "Name"
-              th= "Description"
-              th
-          tbody
-            each val in recipes
-              tr
-                td
-                  a(href="/recipes/" + val._id)= val.name
-                td= val.description
-                td
-                  a(href="#", onclick='javascript:deleteRecipe("' + val._id + '")')= "Delete"
+      div(id="jsGrid")
