@@ -1,68 +1,85 @@
 $(function() {
 
-  $.ajax({
-    url: '/?format=json',
-    type: 'GET',
-    dataType: 'json',
-    complete: function(res) {
+  $("#jsGrid").jsGrid({
+    width: "100%",
 
-      $("#jsGrid").jsGrid({
-        width: "100%",
+    sorting: true,
+    paging: true,
+    editing: true,
+    inserting: true,
+    autoload: true,
+    pageLoading: true,
 
-        sorting: true,
-        paging: true,
+    controller: {
+      loadData: function(filter) {
+        console.log("loadData");
+        return $.ajax({
+          type: "GET",
+          url: "/recipes",
+          data: filter
+        });
+      },
 
-        data: res.responseJSON.data,
+      insertItem: function(item) {
+        return $.ajax({
+          type: "POST",
+          url: "/recipes",
+          data: item
+        });
+      },
 
-        controller: {
-          loadData: function(item) {
-            window.location = "/recipes/" + item._id;
-          },
-          insertItem: function(item) {
-            debugger;
-          },
-          updateItem: function(item) {
-            debugger;
-          },
-          deleteItem: function(item) {
-            $.ajax({
-              url: '/recipes',
-              type: 'DELETE',
-              dataType: 'json',
-              data: {
-                _id: item._id
-              }
+      updateItem: function(item) {
+        return $.ajax({
+          type: "PUT",
+          url: "/recipes",
+          data: item
+        });
+      },
 
-            });
-          }
-        },
+      deleteItem: function(item) {
+        return $.ajax({
+          type: "DELETE",
+          url: "/recipes",
+          data: item
+        });
+      },
+    },
 
-        fields: [{
-            name: "name",
-            type: "text",
-            width: 100,
-            title: "Name"
-          },
-          {
-            name: "description",
-            type: "text",
-            width: 200,
-            title: "Description"
-          },
-          {
-            name: "Delete",
-            type: "control",
-            title: "Delete?"
-          },
-          {
-            name: "_id",
-            type: "text",
-            visible: false
-          }
-        ]
-      });
-    }
+    fields: [{
+        name: "name",
+        type: "text",
+        width: 100,
+        title: "Name"
+      },
+      {
+        name: "style",
+        type: "select",
+        width: 100,
+        // FIXME: hardcoded
+        items: [
+          "Enriched",
+          "Pre-Ferment",
+          "Sourdough",
+          "Straight"
+        ],
+        title: "Style"
+      },
+      {
+        name: "description",
+        type: "text",
+        width: 200,
+        title: "Description"
+      },
+      {
+        name: "actions",
+        type: "control",
+        title: "Actions"
+      },
+      {
+        name: "_id",
+        type: "text",
+        visible: false
+      }
+    ]
   });
-
-
 });

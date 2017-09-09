@@ -14,11 +14,11 @@ function wrapId(id) {
 
 module.exports = {
 
-  getAll: function (db, callback) {
+  getAll: function(db, callback) {
     getCollection(db).find().toArray(callback);
   },
 
-  getById: function (db, id, callback) {
+  getById: function(db, id, callback) {
     var params = {
       '_id': wrapId(id)
     };
@@ -28,7 +28,7 @@ module.exports = {
     );
   },
 
-  deleteOne: function (db, id, callback) {
+  deleteOne: function(db, id, callback) {
     var params = {
       '_id': wrapId(id)
     };
@@ -39,14 +39,14 @@ module.exports = {
     );
   },
 
-  save: function (db, object, callback) {
+  save: function(db, object, callback) {
     getCollection(db).save(
       object,
       callback
     );
   },
 
-  update: function (db, id, object, callback) {
+  update: function(db, id, object, callback) {
     object._id = wrapId(id);
     var params = {
         '_id': wrapId(id)
@@ -55,7 +55,8 @@ module.exports = {
         $set: object
       },
       opts = {
-        upsert: true
+        upsert: true,
+        returnOriginal: false
       };
     getCollection(db).findOneAndUpdate(
       params,

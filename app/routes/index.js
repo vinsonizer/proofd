@@ -12,16 +12,10 @@ router.get('/', function (req, res) {
       if (err) {
         return console.log(err);
       } else {
-        if(req.query.format == "json") {
-          res.setHeader('Content-Type', 'application/json');
-          res.send(JSON.stringify({ data: data }));
-        } else {
-          res.render('index', {
-            pageTitle: 'Home',
-            pageID: 'home',
-            recipes: []
-          });
-        }
+        res.render('index', {
+          pageTitle: 'Home',
+          pageID: 'home'
+        });
       }
 
     };
